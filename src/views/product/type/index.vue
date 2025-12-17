@@ -309,7 +309,7 @@ const handleSubmit = useDebounceFn(() => {
  * @param id 类型ID
  */
 function handleDelete(id?: string) {
-  const typeIds = [id || selectIds.value].flat();
+  const typeIds = [Number.isNaN(Number(parseInt(id))) ? selectIds.value : id].flat();
   if (!typeIds.length) {
     ElMessage.warning("请勾选删除项");
     return;
