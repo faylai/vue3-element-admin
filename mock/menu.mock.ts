@@ -8,6 +8,33 @@ export default defineMock([
       code: "00000",
       data: [
         {
+          path: "/product",
+          component: "Layout",
+          name: "/product",
+          meta: {
+            title: "商品管理",
+            icon: "system",
+            hidden: false,
+            alwaysShow: false,
+            params: null,
+          },
+          children: [
+            {
+              path: "type",
+              component: "product/type/index",
+              name: "type",
+              meta: {
+                title: "类型管理",
+                icon: "el-icon-User",
+                hidden: false,
+                keepAlive: true,
+                alwaysShow: false,
+                params: null,
+              },
+            },
+          ],
+        },
+        {
           path: "/system",
           component: "Layout",
           redirect: "/system/user",

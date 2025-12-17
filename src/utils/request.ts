@@ -72,13 +72,15 @@ httpRequest.interceptors.response.use(
     const { code, data, msg } = response.data;
 
     // 请求成功
-    if (code === ApiCodeEnum.SUCCESS) {
+    if (code && code != ApiCodeEnum.SUCCESS) {
+      // 业务错误
+      ElMessage.error(msg || "系统出错");
+      return Promise.reject(new Error(msg || "Business Error"));
+    } else if (code && code.length) {
       return data;
+    } else {
+      return response.data;
     }
-
-    // 业务错误
-    ElMessage.error(msg || "系统出错");
-    return Promise.reject(new Error(msg || "Business Error"));
   },
   async (error) => {
     console.error("Response interceptor error:", error);
