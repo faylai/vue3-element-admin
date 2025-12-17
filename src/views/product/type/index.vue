@@ -253,7 +253,7 @@ async function handleOpenDialog(id?: string) {
   const treeData = await GoodsTypeAPI.getTree();
   typeOptions.value = treeData;
 
-  if (id) {
+  if (!Number.isNaN(Number(parseInt(id)))) {
     dialog.title = "修改类型";
     GoodsTypeAPI.getFormData(id).then((data) => {
       Object.assign(formData, { ...data });
