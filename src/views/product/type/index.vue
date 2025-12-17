@@ -63,7 +63,7 @@
             <el-table-column label="类型名称" prop="typename" min-width="150" />
             <el-table-column label="类型编码" prop="typecode" width="120" align="center" />
             <el-table-column label="排序" prop="sort" width="80" align="center" />
-            <el-table-column label="状态" align="center" prop="status" width="80">
+            <el-table-column label="状态" align="center" prop="status" width="120">
               <template #default="scope">
                 <el-tag :type="scope.row.status == 0 ? 'success' : 'info'">
                   {{ scope.row.status == 0 ? "可用" : "不可用" }}
