@@ -32,6 +32,25 @@ httpRequest.interceptors.request.use(
       delete config.headers.Authorization;
     }
 
+    if (
+      config.method == "get" &&
+      Object.prototype.hasOwnProperty.call(config.params || {}, "pageNum")
+    ) {
+      config.params = {
+        pageIndex: config.params,
+        ...(config.params || {}),
+      };
+    }
+    if (
+      config.method == "post" &&
+      Object.prototype.hasOwnProperty.call(config.params || {}, "pageNum")
+    ) {
+      config.data = {
+        pageIndex: config.params,
+        ...config.data,
+      };
+    }
+
     return config;
   },
   (error) => {
