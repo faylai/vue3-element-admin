@@ -62,7 +62,6 @@
           >
             <el-table-column label="类型名称" prop="typename" min-width="150" />
             <el-table-column label="类型编码" prop="typecode" width="120" align="center" />
-            <el-table-column label="父类型" prop="parentName" width="120" align="center" />
             <el-table-column label="排序" prop="sort" width="80" align="center" />
             <el-table-column label="状态" align="center" prop="status" width="80">
               <template #default="scope">
@@ -117,16 +116,14 @@
         </el-form-item>
 
         <el-form-item label="父类型" prop="parentid">
-          <el-tree-select
-            v-model="formData.parentid"
-            placeholder="请选择父类型"
-            :data="typeOptions"
-            filterable
-            check-strictly
-            clearable
-            :render-after-expand="false"
-            :props="{ value: 'id', label: 'typename', children: 'children' }"
-          />
+          <el-select v-model="formData.parentid" placeholder="请选择父类型" filterable clearable>
+            <el-option
+              v-for="item in typeOptions"
+              :key="item.id"
+              :label="item.typename"
+              :value="item.id"
+            />
+          </el-select>
         </el-form-item>
 
         <el-form-item label="排序" prop="sort">
@@ -250,14 +247,14 @@ function handleSelectionChange(selection: any[]) {
 async function handleOpenDialog(id?: string) {
   dialog.visible = true;
   // 加载类型下拉数据源
-  const treeData = await GoodsTypeAPI.getTree();
-  typeOptions.value = treeData;
+  const listData = await GoodsTypeAPI.getList();
+  typeOptions.value = listData;
 
   if (!Number.isNaN(Number(parseInt(id)))) {
     dialog.title = "修改类型";
     GoodsTypeAPI.getFormData(id).then((data) => {
       Object.assign(formData, { ...data });
-      // 确保 parentid 为字符串类型以正确绑定树形选择
+      // 确保 parentid 为字符串类型以正确绑定选择框
       if (data.parentid) {
         formData.parentid = String(data.parentid);
       }
